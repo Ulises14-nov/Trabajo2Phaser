@@ -1,5 +1,6 @@
 import Enemigo from "./Enemigo.js";
 import Nave from "./Nave.js";
+import Bala from "./Balas.js";
 
 class Escena extends Phaser.Scene {
 
@@ -12,11 +13,13 @@ class Escena extends Phaser.Scene {
     preload() {
         this.load.image('fondo', '../public/img/sky.png');
         this.load.image('red', '../public/img/red.png');
+        this.load.image('bala', '../public/img/shoot.png');
         this.load.spritesheet('nave', '../public/img/nave.png', { frameWidth: 70, frameHeight: 62 });
     };
 
     create() {
         this.add.image(500, 300, 'fondo').setScale(2);
+        this.add.image(100, 70, 'bala');
         this.nave = new Nave(this);
 
         let particles = this.add.particles(-10, 0, 'red', {
@@ -28,6 +31,7 @@ class Escena extends Phaser.Scene {
 
         particles.startFollow(this.nave);
 
+        this.balas=this.physics.add.group();
         this.enemigos = this.physics.add.group();
 
         this.enemySpawnTimer = this.time.addEvent({
@@ -43,6 +47,13 @@ class Escena extends Phaser.Scene {
         this.enemigos.children.iterate(enemigo => {
             enemigo.update();
         });
+
+        this.nave.update(this.input.keyboard.createCursorKeys());
+        this.balas.children.iterate(bala => {
+            bala.update();
+        });
+        
+
     };
 
     spawnEnemy() {
