@@ -16,7 +16,11 @@ class Enemigo extends Phaser.Physics.Arcade.Sprite {
     reset() {
         this.x = 1150;
         this.y = Phaser.Math.Between(30, 570);
-    };
+        this.setVelocity(0, 0);
+        this.setAcceleration(0);
+        this.setAngularVelocity(0);
+        this.angle = 0;
+    }
 };
 
 export default Enemigo;
