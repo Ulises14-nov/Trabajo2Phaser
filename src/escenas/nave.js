@@ -1,6 +1,6 @@
 class Nave extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'nave');
+    constructor(scene) {
+        super(scene, 100, 300, 'nave');
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
@@ -9,23 +9,20 @@ class Nave extends Phaser.Physics.Arcade.Sprite {
         scene.anims.create({
             key: 'up_move',
             frames: scene.anims.generateFrameNumbers('nave', { start: 2, end: 2 }),
-            frameRate: 5,
-            // repeat: -1
+            frameRate: 5
         });
 
         scene.anims.create({
             key: 'down_move',
             frames: scene.anims.generateFrameNumbers('nave', { start: 1, end: 1 }),
-            frameRate: 5,
-            // repeat: -1
+            frameRate: 5
         });
 
         scene.anims.create({
             key: 'turn_idle',
             frames: [{ key: 'nave', frame: 0 }],
             frameRate: 5,
-            repeat: -1,
-
+            repeat: -1
         });
 
         this.cursors = scene.input.keyboard.addKeys({
@@ -41,9 +38,6 @@ class Nave extends Phaser.Physics.Arcade.Sprite {
         });
     };
 
-    preload() {
-
-    }
     update() {
         if (this.body) {
             if (this.cursors.up.isDown || this.cursors.up2.isDown) {
@@ -63,10 +57,6 @@ class Nave extends Phaser.Physics.Arcade.Sprite {
                 this.setVelocityY(0);
                 this.anims.play('turn_idle');
             };
-
-            // if ((this.cursors.up.isDown || this.cursors.up2.isDown) && this.body.touching.down) {
-            //     this.setVelocityY(-330);
-            // };
         };
     };
 };

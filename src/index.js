@@ -1,16 +1,16 @@
-import Escena1 from "./escenas/Escena1.js"
+import Escena from "./escenas/Escena.js"
 
 let config = {
     type: Phaser.AUTO,
-    width: 1000,
+    width: 1100,
     height: 600,
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 0 },
-            debug: false
+            gravity: { y: 0 }
         }
     },
-    scene: [Escena1]
+    scene: Escena
 };
+
 let game = new Phaser.Game(config);
