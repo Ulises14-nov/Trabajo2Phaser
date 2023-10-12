@@ -7,17 +7,17 @@ class Pierde extends EscenaBase {
     };
 
     preload() {
-        this.load.image('sky', 'img/sky.png');
         super.preload();
     };
 
     create() {
         this.selectSound = this.sound.add('selectSound');
+        this.selectSound.volume = 0.5;
 
-        this.add.image(500, 300, 'sky').setScale(2);
+        this.add.image(550, 300, 'loseBG');
 
         this.text = this.add.text(550, 300, 'Perdiste :(', {
-            fontFamily: 'VT323, monospace', fontSize: '84px', fill: '#000'
+            fontFamily: 'VT323, monospace', fontSize: '84px', fill: '#F9F9F9'
         });
         this.text.setOrigin(0.5, 1.5);
 

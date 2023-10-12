@@ -20,6 +20,9 @@ class EscenaBase extends Phaser.Scene {
         //Imagenes
         this.load.image('fondo', '../public/img/SpaceBackground.png');
         this.load.image('fondo2', '../public/img/PlanetBG.png');
+        this.load.image('loseBG', '../public/img/LoseBG.png');
+        this.load.image('winBG', '../public/img/WinBG.png');
+        this.load.image('bossBG', '../public/img/BossBG.png');
         this.load.image('red', '../public/img/red.png');
         this.load.spritesheet('nave', '../public/img/Player.png', { frameWidth: 70, frameHeight: 70 });
         this.load.spritesheet('enemigo', '../public/img/Enemy.png', { frameWidth: 70, frameHeight: 70 });
@@ -37,6 +40,10 @@ class EscenaBase extends Phaser.Scene {
     };
 
     createPlayer() {
+        if (this.nave) {
+            this.nave.destroy();
+        };
+
         this.nave = new Nave(this);
 
         const particles = this.add.particles(-10, 0, 'red', {
@@ -67,10 +74,13 @@ class EscenaBase extends Phaser.Scene {
 
     enemyCollision(nave, enemigo) {
         this.collidingEnemy = enemigo; // Guarda la referencia al enemigo colisionado
+        this.nave = nave;
 
-        this.collidingEnemy.play('explotion'); // Reproduce la animación en el enemigo colisionado
+        this.collidingEnemy.play('explotion');
         this.hurtSound = this.sound.add('hurtSound');
+        this.hurtSound.volume = 0.2;
         this.loseSound = this.sound.add('loseSound');
+        this.loseSound.volume = 0.1;
 
         if (this.canLoseLife) {
             this.canLoseLife = false;
