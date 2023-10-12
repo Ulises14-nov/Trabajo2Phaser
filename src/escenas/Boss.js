@@ -5,7 +5,6 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
         scene.physics.world.enable(this);
     };
 
-
     update() {
         this.x += -6;
         if (this.x < -10) {
@@ -20,10 +19,8 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
         this.setAcceleration(0);
         this.setAngularVelocity(0);
         this.angle = 0;
-
         this.anims.play('enemy_idle', true);
         this.setFrame(0);
-
         this.explosionPlaying = false;
     };
 };
