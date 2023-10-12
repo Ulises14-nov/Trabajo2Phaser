@@ -7,11 +7,8 @@ class Menu extends EscenaBase {
     };
 
     preload() {
-        this.load.audio('selectSound', '../public/sounds/SelectSound.wav');
-
         this.load.image('sky', 'img/sky.png');
-        this.load.image('ground', 'img/platform.png');
-        this.load.image('bomb', 'img/bomb.png');
+        super.preload();
     };
 
     create() {
@@ -19,7 +16,7 @@ class Menu extends EscenaBase {
 
         this.add.image(500, 300, 'sky').setScale(2);
 
-        this.text = this.add.text(500, 300, 'PRESIONA ENTER PARA EMPEZAR', {
+        this.text = this.add.text(550, 300, 'PRESIONA ENTER PARA EMPEZAR', {
             fontFamily: 'VT323, monospace', fontSize: '40px', fill: '#F4C430'
         });
         this.text.setOrigin(0.5, 0);

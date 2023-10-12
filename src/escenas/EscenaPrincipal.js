@@ -6,23 +6,29 @@ class Escena extends EscenaBase {
         super("Escena");
         this.physics;
         this.nave;
+        this.lifeText;
+        this.score;
+        this.scoreText;
     };
 
     create() {
         //Imagenes
         this.add.image(500, 300, 'fondo').setScale(2);
-        this.add.image(300, 300, 'fondo2').setScale(2, 2.5);
-        super.create();
+        this.add.image(300, 300, 'fondo2');
         this.lifes = 3;
+        this.score = 0;
 
         this.createPlayer();
         this.createEnemies();
 
         this.physics.add.collider(this.nave, this.enemigos, this.enemyCollision, null, this);
 
-        this.scoreText = this.add.text(16, 16, 'Vidas: 3', {
-            fontSize: '32px',
-            fill: '#F9F9F9'
+        this.lifeText = this.add.text(16, 16, 'Vidas: 3', {
+            fontFamily: 'VT323, monospace', fontSize: '52px', fill: '#F9F9F9'
+        });
+
+        this.scoreText = this.add.text(814, 520, 'Puntos: 0', {
+            fontFamily: 'VT323, monospace', fontSize: '52px', fill: '#F9F9F9'
         });
     };
 

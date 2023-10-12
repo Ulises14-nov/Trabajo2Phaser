@@ -7,9 +7,13 @@ class EscenaBase extends Phaser.Scene {
         super(key);
         this.nave;
         this.enemigo;
+        this.lifeText;
+        this.scoreText;
+        this.score = 0;
         this.lifes = 3;
         this.soundPlayed = false;
         this.canLoseLife = true;
+        this.collidingEnemy = null;
     };
 
     preload() {
@@ -17,8 +21,11 @@ class EscenaBase extends Phaser.Scene {
         this.load.image('fondo', '../public/img/sky.png');
         this.load.image('fondo2', '../public/img/PlanetBG.png');
         this.load.image('red', '../public/img/red.png');
-        this.load.spritesheet('nave', '../public/img/nave.png', { frameWidth: 70, frameHeight: 62 });
-        this.load.spritesheet('enemigo', '../public/img/enemy.png', { frameWidth: 70, frameHeight: 62 });
+        this.load.spritesheet('nave', '../public/img/Player.png', { frameWidth: 70, frameHeight: 70 });
+        this.load.spritesheet('enemigo', '../public/img/Enemy.png', { frameWidth: 70, frameHeight: 70 });
+        this.load.spritesheet('boss', '../public/img/Boss.png', { frameWidth: 70, frameHeight: 70 });
+        this.load.spritesheet('enemigoExplosion', '../public/img/EnemyExplotion.png', { frameWidth: 80, frameHeight: 80 });
+        this.load.spritesheet('bossExplosion', '../public/img/ExplotionEND.png', { frameWidth: 70, frameHeight: 70 });
 
         //Sonidos
         this.load.audio('loseSound', '../public/sounds/LoseSound.wav');
@@ -27,13 +34,6 @@ class EscenaBase extends Phaser.Scene {
         this.load.audio('spawnSound', '../public/sounds/SpawnSound.wav');
         this.load.audio('atackSound', '../public/sounds/AtackSound.wav');
         this.load.audio('atackSuccessSound', '../public/sounds/AtackSuccessSound.wav');
-    };
-
-    create() {
-        //Sonidos
-        this.loseSound = this.sound.add('loseSound');
-        this.selectSound = this.sound.add('selectSound');
-        this.spawnSound = this.sound.add('spawnSound');
     };
 
     createPlayer() {
@@ -65,24 +65,33 @@ class EscenaBase extends Phaser.Scene {
         this.enemigos.add(enemigo);
     };
 
-    enemyCollision() {
+    enemyCollision(nave, enemigo) {
+        this.collidingEnemy = enemigo; // Guarda la referencia al enemigo colisionado
+
+        this.collidingEnemy.play('explotion'); // Reproduce la animación en el enemigo colisionado
+        this.hurtSound = this.sound.add('hurtSound');
+        this.loseSound = this.sound.add('loseSound');
+
         if (this.canLoseLife) {
             this.canLoseLife = false;
 
             if (!this.soundPlayed) {
-                this.loseSound.play();
+                this.hurtSound.play();
                 this.soundPlayed = true;
                 this.nave.setTint(0xFF0000);
             }
 
             this.lifes--;
-            this.scoreText.setText(`Vidas: ${this.lifes}`);
+            this.score -= 50;
+            this.lifeText.setText(`Vidas: ${this.lifes}`);
+            this.scoreText.setText(`Puntos: ${this.score}`);
 
             if (this.lifes <= 0) {
                 setTimeout(() => {
                     if (this.nave) {
                         this.soundPlayed = false;
                         this.canLoseLife = true;
+                        this.loseSound.play();
                         this.scene.start('Pierde');
                     }
                 }, 500);
@@ -93,8 +102,9 @@ class EscenaBase extends Phaser.Scene {
                 this.canLoseLife = true;
                 this.nave.clearTint();
             });
-        };
-    };
+        }
+    }
+
 };
 
 export default EscenaBase;

@@ -7,11 +7,8 @@ class Pierde extends EscenaBase {
     };
 
     preload() {
-        this.load.audio('selectSound', '../public/sounds/SelectSound.wav');
-
         this.load.image('sky', 'img/sky.png');
-        this.load.image('ground', 'img/platform.png');
-        this.load.image('bomb', 'img/bomb.png');
+        super.preload();
     };
 
     create() {
@@ -19,15 +16,20 @@ class Pierde extends EscenaBase {
 
         this.add.image(500, 300, 'sky').setScale(2);
 
-        this.text = this.add.text(500, 300, 'Perdiste :(', {
+        this.text = this.add.text(550, 300, 'Perdiste :(', {
             fontFamily: 'VT323, monospace', fontSize: '84px', fill: '#000'
         });
         this.text.setOrigin(0.5, 1.5);
 
-        this.text = this.add.text(500, 300, 'PRESIONA R PARA REINICIAR', {
-            fontFamily: 'VT323, monospace', fontSize: '40px', fill: '#F4C430'
+        this.text = this.add.text(550, 300, 'PRESIONA R PARA REINICIAR', {
+            fontFamily: 'VT323, monospace', fontSize: '32px', fill: '#F4C430'
         });
         this.text.setOrigin(0.5, 0);
+
+        this.text = this.add.text(550, 300, 'PRESIONA ENTER PARA VOLVER AL MENU', {
+            fontFamily: 'VT323, monospace', fontSize: '32px', fill: '#F4C430'
+        });
+        this.text.setOrigin(0.5, -2);
 
         this.input.keyboard.on('keydown-R', () => {
             this.selectSound.play();
