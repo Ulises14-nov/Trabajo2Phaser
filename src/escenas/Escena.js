@@ -1,6 +1,6 @@
 import Enemigo from "./Enemigo.js";
 import Nave from "./Nave.js";
-import Bala from "./Balas.js";
+//import Bala from "./Balas.js";
 
 class Escena extends Phaser.Scene {
 
@@ -8,7 +8,13 @@ class Escena extends Phaser.Scene {
         super("Escena");
         this.physics;
         this.nave;
+        // this.balas;
+        // this.disparo;
+        // this.tiempo=0;
+        // this.unabala;
+        // this.game = new Phaser.Game();
     };
+    
 
     preload() {
         this.load.image('fondo', '../public/img/sky.png');
@@ -30,16 +36,21 @@ class Escena extends Phaser.Scene {
         });
 
         particles.startFollow(this.nave);
-
-        this.balas=this.physics.add.group();
         this.enemigos = this.physics.add.group();
-
         this.enemySpawnTimer = this.time.addEvent({
             delay: 1000, // Intervalo de tiempo en milisegundos entre la aparición de enemigos
             repeat: 4,   // Número de enemigos a crear (ajusta según tu necesidad)
             callback: this.spawnEnemy,
             callbackScope: this
         });
+
+        // this.disparo=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        // this.balas=this.game.add.group();
+        // this.balas.enableBody=true;
+        // this.balas.physicsBodyType=Phaser.physics.ARCADE;
+        // this.balas.createMultiple(30,'bala');
+        // this.balas.setAll('outOfBoundsKill',true);
+        // this.balas.setAll('checkWorlBounds',true);
     };
 
     update() {
@@ -48,11 +59,21 @@ class Escena extends Phaser.Scene {
             enemigo.update();
         });
 
-        this.nave.update(this.input.keyboard.createCursorKeys());
-        this.balas.children.iterate(bala => {
-            bala.update();
-        });
+        // this.nave.update(this.input.keyboard.createCursorKeys());
+        // this.balas.children.iterate(bala => {
+        //     bala.update();
+        // });
         
+        // if(this.disparo.isDown){
+        //     if(this.game.time.now > this.tiempo){
+        //         this.unabala=this.balas.getFirstExists(false);
+        //     }
+        //     if(this.unabala){
+        //         this.unabala.reset(nave.x,nave.y);
+        //         this.unabala.body.velocity.x=200;
+        //         this.tiempo=this.escena.time.now+100;
+        //     }
+        // }
 
     };
 
