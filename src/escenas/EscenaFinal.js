@@ -1,13 +1,15 @@
+import Boss from "./Boss.js";
 import EscenaBase from "./EscenaBase.js";
 
 class EscenaFinal extends EscenaBase {
 
     constructor() {
-        super("Escena");
+        super("EscenaFinal");
         this.physics;
         this.nave;
         this.lifeText;
         this.score;
+        this.boss;
         this.scoreText;
     };
 
@@ -15,8 +17,8 @@ class EscenaFinal extends EscenaBase {
         //Imagenes
         this.add.image(550, 300, 'bossBG');
         this.lifes = 3;
-        this.score = 0;
 
+        this.boss = new Boss(this);
         this.createPlayer();
 
         this.physics.add.collider(this.nave, this.enemigos, this.enemyCollision, null, this);

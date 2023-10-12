@@ -1,24 +1,10 @@
-class Enemigo extends Phaser.Physics.Arcade.Sprite {
+class Boss extends Phaser.Physics.Arcade.Sprite {
     constructor(scene) {
-        super(scene, 1100, Phaser.Math.Between(30, 570), 'enemigo');
-
+        super(scene, 950, 300, 'boss');
         scene.add.existing(this);
         scene.physics.world.enable(this);
-
-        scene.anims.create({
-            key: 'explotion',
-            frames: scene.anims.generateFrameNumbers('enemigoExplosion', { start: 0, end: 5 }),
-            frameRate: 8
-        });
-
-        scene.anims.create({
-            key: 'enemy_idle',
-            frames: [{ key: 'enemigo', frame: 0 }],
-            frameRate: 4,
-        });
-
-        this.explosionPlaying = false;
     };
+
 
     update() {
         this.x += -6;
@@ -42,4 +28,4 @@ class Enemigo extends Phaser.Physics.Arcade.Sprite {
     };
 };
 
-export default Enemigo;
+export default Boss;
