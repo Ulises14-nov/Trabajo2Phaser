@@ -13,7 +13,7 @@ class Escena extends EscenaBase {
 
     create() {
         //Imagenes
-        this.add.image(500, 300, 'fondo').setScale(2);
+        this.add.image(600, 300, 'fondo');
         this.add.image(300, 300, 'fondo2');
         this.lifes = 3;
         this.score = 0;

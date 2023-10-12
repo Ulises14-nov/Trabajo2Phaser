@@ -18,7 +18,7 @@ class EscenaBase extends Phaser.Scene {
 
     preload() {
         //Imagenes
-        this.load.image('fondo', '../public/img/sky.png');
+        this.load.image('fondo', '../public/img/SpaceBackground.png');
         this.load.image('fondo2', '../public/img/PlanetBG.png');
         this.load.image('red', '../public/img/red.png');
         this.load.spritesheet('nave', '../public/img/Player.png', { frameWidth: 70, frameHeight: 70 });
