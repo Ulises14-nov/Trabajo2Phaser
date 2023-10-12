@@ -8,21 +8,26 @@ class Nave extends Phaser.Physics.Arcade.Sprite {
 
         scene.anims.create({
             key: 'up_move',
-            frames: scene.anims.generateFrameNumbers('nave', { start: 2, end: 2 }),
-            frameRate: 5
+            frames: scene.anims.generateFrameNumbers('nave', { start: 2, end: 0 }),
+            frameRate: 5,
+            repeat: 0,
+            yoyo: true
         });
 
         scene.anims.create({
             key: 'down_move',
-            frames: scene.anims.generateFrameNumbers('nave', { start: 1, end: 1 }),
-            frameRate: 5
+            frames: scene.anims.generateFrameNumbers('nave', { start: 2, end: 4 }),
+            frameRate: 5,
+            repeat: 0,
+            yoyo: true
         });
 
         scene.anims.create({
             key: 'turn_idle',
-            frames: [{ key: 'nave', frame: 0 }],
-            frameRate: 5,
-            repeat: -1
+            frames: [{ key: 'nave', frame: 2 }],
+            frameRate: 4,
+            repeat: -1,
+            yoyo: true
         });
 
         this.cursors = scene.input.keyboard.addKeys({
