@@ -1,4 +1,5 @@
 import Boss from "./Boss.js";
+import Balas from "./Balas.js"
 import EscenaBase from "./EscenaBase.js";
 
 class EscenaFinal extends EscenaBase {
@@ -8,6 +9,7 @@ class EscenaFinal extends EscenaBase {
         this.physics;
         this.nave;
         this.lifeText;
+        this.balas;
         this.score;
         this.boss;
         this.scoreText;
@@ -18,7 +20,12 @@ class EscenaFinal extends EscenaBase {
         this.add.image(550, 300, 'bossBG');
         this.lifes = 3;
 
-        this.boss = new Boss(this);
+        this.balas = this.physics.add.group({
+            classType: Balas,
+            runChildUpdate: true
+        });
+
+        const boss = new Boss(this);
         this.createPlayer();
 
         this.physics.add.collider(this.nave, this.enemigos, this.enemyCollision, null, this);
@@ -34,6 +41,10 @@ class EscenaFinal extends EscenaBase {
 
     update() {
         this.nave.update(this.input.keyboard.createCursorKeys());
+
+        this.balas.children.iterate(bala => {
+            bala.update()
+        });
     };
 };
 

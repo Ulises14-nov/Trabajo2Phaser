@@ -44,7 +44,7 @@ class EscenaBase extends Phaser.Scene {
             this.nave.destroy();
         };
 
-        this.nave = new Nave(this);
+        this.nave = new Nave(this, this.balas);
 
         const particles = this.add.particles(-10, 0, 'red', {
             speed: 100,
@@ -73,14 +73,32 @@ class EscenaBase extends Phaser.Scene {
     };
 
     enemyCollision(nave, enemigo) {
-        this.collidingEnemy = enemigo; // Guarda la referencia al enemigo colisionado
+        this.handleEnemyHit(nave, enemigo);
+        this.handlePlayerDamage(nave);
+    };
+
+    handleEnemyHit(nave, enemigo) {
+        this.collidingEnemy = enemigo;
         this.nave = nave;
 
+        this.atackSuccessSound = this.sound.add('atackSuccessSound');
+        this.atackSuccessSound.volume = 0.3;
+
         this.collidingEnemy.play('explotion');
+
+        if (!this.collidingEnemy.hasBeenHit) {
+            this.atackSuccessSound.play();
+            this.collidingEnemy.hasBeenHit = true;
+        };
+    };
+
+    handlePlayerDamage(nave) {
+        this.nave = nave;
+
         this.hurtSound = this.sound.add('hurtSound');
         this.hurtSound.volume = 0.2;
         this.loseSound = this.sound.add('loseSound');
-        this.loseSound.volume = 0.1;
+        this.loseSound.volume = 0.2;
 
         if (this.canLoseLife) {
             this.canLoseLife = false;
@@ -89,7 +107,7 @@ class EscenaBase extends Phaser.Scene {
                 this.hurtSound.play();
                 this.soundPlayed = true;
                 this.nave.setTint(0xFF0000);
-            }
+            };
 
             this.lifes--;
             this.score -= 50;
@@ -105,16 +123,36 @@ class EscenaBase extends Phaser.Scene {
                         this.scene.start('Pierde');
                     }
                 }, 500);
-            }
+            };
 
             this.time.delayedCall(1000, () => {
                 this.soundPlayed = false;
                 this.canLoseLife = true;
                 this.nave.clearTint();
             });
-        }
-    }
+        };
+    };
 
+    shootBullet() {
+        this.atackSound = this.sound.add('atackSound');
+        this.atackSound.volume = 0.2;
+
+        if (!this.soundPlayed) {
+            this.atackSound.play();
+            this.soundPlayed = true;
+
+            this.time.delayedCall(300, () => {
+                this.soundPlayed = false;
+            });
+        };
+
+        if (this.active) {
+            const bala = this.balas.get(this.x, this.y);
+            if (bala) {
+                bala.fire(this);
+            };
+        };
+    };
 };
 
 export default EscenaBase;
