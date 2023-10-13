@@ -37,6 +37,11 @@ class Escena extends EscenaBase {
         this.enemigos.children.iterate(enemigo => {
             enemigo.update();
         });
+       
+        this.boss.children.iterate(boss => {
+            boss.update();
+        });
+       
     };
 };
 

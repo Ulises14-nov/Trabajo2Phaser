@@ -34,6 +34,7 @@ class EscenaFinal extends EscenaBase {
 
     update() {
         this.nave.update(this.input.keyboard.createCursorKeys());
+        this.boss.update(this.input.keyboard.createCursorKeys());
     };
 };
 

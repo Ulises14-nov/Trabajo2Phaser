@@ -26,7 +26,7 @@ class EscenaBase extends Phaser.Scene {
         this.load.image('red', '../public/img/red.png');
         this.load.spritesheet('nave', '../public/img/Player.png', { frameWidth: 70, frameHeight: 70 });
         this.load.spritesheet('enemigo', '../public/img/Enemy.png', { frameWidth: 70, frameHeight: 70 });
-        this.load.spritesheet('boss', '../public/img/Boss.png', { frameWidth: 140, frameHeight: 140 });
+        this.load.spritesheet('boss', '../public/img/Boss.png', { frameWidth: 160, frameHeight: 220 });
         this.load.spritesheet('enemigoExplosion', '../public/img/EnemyExplotion.png', { frameWidth: 80, frameHeight: 80 });
         this.load.spritesheet('bossExplosion', '../public/img/ExplotionEND.png', { frameWidth: 70, frameHeight: 70 });
 
