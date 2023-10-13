@@ -1,18 +1,14 @@
 import Boss from "./Boss.js";
-import Balas from "./Balas.js"
 import EscenaBase from "./EscenaBase.js";
 
 class EscenaFinal extends EscenaBase {
 
     constructor() {
         super("EscenaFinal");
-        this.physics;
-        this.nave;
-        this.lifeText;
-        this.balas;
-        this.score;
-        this.boss;
-        this.scoreText;
+    };
+
+    init(data) {
+        this.score = data.score;
     };
 
     create() {
@@ -20,31 +16,26 @@ class EscenaFinal extends EscenaBase {
         this.add.image(550, 300, 'bossBG');
         this.lifes = 3;
 
-        this.balas = this.physics.add.group({
-            classType: Balas,
-            runChildUpdate: true
-        });
-
         const boss = new Boss(this);
+        this.boss = boss;
         this.createPlayer();
+        this.balas = this.physics.add.group();
 
+        this.physics.add.overlap(this.balas, this.enemigos, this.bulletCollision, null, this);
         this.physics.add.collider(this.nave, this.enemigos, this.enemyCollision, null, this);
 
         this.lifeText = this.add.text(16, 16, 'Vidas: 3', {
             fontFamily: 'VT323, monospace', fontSize: '52px', fill: '#F9F9F9'
         });
 
-        this.scoreText = this.add.text(814, 520, 'Puntos: 0', {
+        this.scoreText = this.add.text(814, 520, `Puntos: ${this.score}`, {
             fontFamily: 'VT323, monospace', fontSize: '52px', fill: '#F9F9F9'
         });
     };
 
     update() {
         this.nave.update(this.input.keyboard.createCursorKeys());
-
-        this.balas.children.iterate(bala => {
-            bala.update()
-        });
+        this.boss.update();
     };
 };
 

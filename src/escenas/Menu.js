@@ -28,7 +28,7 @@ class Menu extends EscenaBase {
 
         this.input.keyboard.on('keydown-ENTER', () => {
             this.selectSound.play();
-            this.scene.start('EscenaFinal');
+            this.scene.start('Escena');
         });
     };
 };

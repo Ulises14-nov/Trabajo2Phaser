@@ -4,11 +4,6 @@ class Escena extends EscenaBase {
 
     constructor() {
         super("Escena");
-        this.physics;
-        this.nave;
-        this.lifeText;
-        this.score;
-        this.scoreText;
     };
 
     create() {
@@ -18,16 +13,19 @@ class Escena extends EscenaBase {
         this.lifes = 3;
         this.score = 0;
 
+        this.balas = this.physics.add.group();
+
         this.createPlayer();
         this.createEnemies();
 
+        this.physics.add.overlap(this.balas, this.enemigos, this.bulletCollision, null, this);
         this.physics.add.collider(this.nave, this.enemigos, this.enemyCollision, null, this);
 
         this.lifeText = this.add.text(16, 16, 'Vidas: 3', {
             fontFamily: 'VT323, monospace', fontSize: '52px', fill: '#F9F9F9'
         });
 
-        this.scoreText = this.add.text(814, 520, 'Puntos: 0', {
+        this.scoreText = this.add.text(814, 520, `Puntos: ${this.score}`, {
             fontFamily: 'VT323, monospace', fontSize: '52px', fill: '#F9F9F9'
         });
     };
@@ -35,8 +33,14 @@ class Escena extends EscenaBase {
     update() {
         this.nave.update(this.input.keyboard.createCursorKeys());
         this.enemigos.children.iterate(enemigo => {
-            enemigo.update();
+            if (enemigo && enemigo.update) {
+                enemigo.update();
+            }
         });
+
+        if (this.score >= 200) {
+            this.scene.start('EscenaFinal', { score: this.score })
+        };
     };
 };
 
