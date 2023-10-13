@@ -6,6 +6,14 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true);
         this.isMovingUp = true;
 
+        this.bossLife = 15;
+
+        scene.anims.create({
+            key: 'bossExplotion',
+            frames: scene.anims.generateFrameNumbers('enemigoExplosion', { start: 0, end: 5 }),
+            frameRate: 8
+        });
+
         scene.anims.create({
             key: 'enemy_idle',
             frames: [{ key: 'boss', frame: 0 }],
@@ -32,7 +40,15 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
                 };
             };
         }, 2000);
+
+        if (this.vida <= 0) {
+        };
     };
+
+    destroyBoss() {
+
+        this.destroy();
+    }
 };
 
 export default Boss;

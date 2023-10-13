@@ -64,7 +64,7 @@ class Nave extends Phaser.Physics.Arcade.Sprite {
             };
 
             if (this.cursors.space.isDown) {
-                this.scene.shootBullet();
+                this.scene.shoot();
             };
         };
     };

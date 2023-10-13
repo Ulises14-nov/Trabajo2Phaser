@@ -1,14 +1,11 @@
 import Enemigo from "./Enemigo.js";
 import Nave from "./Nave.js";
+import Bala from "./Bala.js";
 
 class EscenaBase extends Phaser.Scene {
 
     constructor(key) {
         super(key);
-        this.nave;
-        this.enemigo;
-        this.lifeText;
-        this.scoreText;
         this.score = 0;
         this.lifes = 3;
         this.soundPlayed = false;
@@ -25,6 +22,7 @@ class EscenaBase extends Phaser.Scene {
         this.load.image('bossBG', '../public/img/BossBG.png');
         this.load.image('red', '../public/img/red.png');
         this.load.spritesheet('nave', '../public/img/Player.png', { frameWidth: 70, frameHeight: 70 });
+        this.load.image('bala', '../public/img/Bala.png', { frameWidth: 70, frameHeight: 70 });
         this.load.spritesheet('enemigo', '../public/img/Enemy.png', { frameWidth: 70, frameHeight: 70 });
         this.load.spritesheet('boss', '../public/img/Boss.png', { frameWidth: 160, frameHeight: 220 });
         this.load.spritesheet('enemigoExplosion', '../public/img/EnemyExplotion.png', { frameWidth: 80, frameHeight: 80 });
@@ -44,7 +42,7 @@ class EscenaBase extends Phaser.Scene {
             this.nave.destroy();
         };
 
-        this.nave = new Nave(this, this.balas);
+        this.nave = new Nave(this);
 
         const particles = this.add.particles(-10, 0, 'red', {
             speed: 100,
@@ -61,11 +59,11 @@ class EscenaBase extends Phaser.Scene {
 
         this.enemySpawnTimer = this.time.addEvent({
             delay: 1000,
-            repeat: 4,
+            repeat: -1,
             callback: this.spawnEnemy,
             callbackScope: this
         });
-    };
+    }
 
     spawnEnemy() {
         const enemigo = new Enemigo(this);
@@ -75,6 +73,23 @@ class EscenaBase extends Phaser.Scene {
     enemyCollision(nave, enemigo) {
         this.handleEnemyHit(nave, enemigo);
         this.handlePlayerDamage(nave);
+
+        if (this.collidingEnemy === this.jefe) {
+            this.jefe.vida--;
+
+            if (this.jefe.vida <= 0) {
+                this.jefe.destroy();
+            };
+        };
+    };
+
+    bulletCollision(bala, enemigo) {
+        const nave = this.nave
+        bala.destroy();
+        this.handleEnemyHit(nave, enemigo)
+
+        this.score += 25;
+        this.scoreText.setText(`Puntos: ${this.score}`);
     };
 
     handleEnemyHit(nave, enemigo) {
@@ -90,6 +105,7 @@ class EscenaBase extends Phaser.Scene {
             this.atackSuccessSound.play();
             this.collidingEnemy.hasBeenHit = true;
         };
+        enemigo.destroy();
     };
 
     handlePlayerDamage(nave) {
@@ -133,26 +149,10 @@ class EscenaBase extends Phaser.Scene {
         };
     };
 
-    shootBullet() {
-        this.atackSound = this.sound.add('atackSound');
-        this.atackSound.volume = 0.2;
-
-        if (!this.soundPlayed) {
-            this.atackSound.play();
-            this.soundPlayed = true;
-
-            this.time.delayedCall(300, () => {
-                this.soundPlayed = false;
-            });
-        };
-
-        if (this.active) {
-            const bala = this.balas.get(this.x, this.y);
-            if (bala) {
-                bala.fire(this);
-            };
-        };
-    };
+    shoot() {
+        const bala = new Bala(this, this.nave.x, this.nave.y);
+        this.balas.add(bala);
+    }
 };
 
 export default EscenaBase;
