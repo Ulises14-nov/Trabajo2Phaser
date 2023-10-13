@@ -1,8 +1,10 @@
 class Boss extends Phaser.Physics.Arcade.Sprite {
     constructor(scene) {
-        super(scene, 950, 300, 'boss');
+        super(scene, 1150, 300, 'boss');
         scene.add.existing(this);
         scene.physics.world.enable(this);
+        this.setCollideWorldBounds(true);
+        this.isMovingUp = true;
 
         scene.anims.create({
             key: 'enemy_idle',
@@ -12,22 +14,24 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
     };
 
     update() {
-        this.x += -6;
-        if (this.x < 700) {
-            this.reset();
+        this.x += -2;
+        if (this.x < 950) {
+            this.x = 950;
         };
-    };
 
-    reset() {
-        this.x = 1200;
-        this.y = Phaser.Math.Between(30, 570);
-        this.setVelocity(10, 10);
-        this.setAcceleration(0);
-        this.setAngularVelocity(0);
-        this.angle = 0;
-        this.anims.play('enemy_idle', true);
-        this.setFrame(0);
-       
+        setTimeout(() => {
+            if (this.isMovingUp) {
+                this.y -= 2;
+                if (this.y <= 150) {
+                    this.isMovingUp = false;
+                };
+            } else {
+                this.y += 2;
+                if (this.y >= 450) {
+                    this.isMovingUp = true;
+                };
+            };
+        }, 2000);
     };
 };
 
