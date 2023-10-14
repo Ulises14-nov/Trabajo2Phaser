@@ -6,6 +6,10 @@ class Gana extends EscenaBase {
         this.text;
     };
 
+    init(data) {
+        this.score = data.score;
+    }
+
     preload() {
         super.preload();
     };
@@ -15,6 +19,13 @@ class Gana extends EscenaBase {
         this.selectSound.volume = 0.5;
 
         this.add.image(550, 300, 'winBG');
+
+        this.scoreText = this.add.text(550, 530, `Puntos totales: ${this.score}`, {
+            fontFamily: 'VT323, monospace',
+            fontSize: '72px',
+            fill: '#F9F9F9'
+        });
+        this.scoreText.setOrigin(0.5, 1);
 
         this.text = this.add.text(550, 300, '¡Ganaste!', {
             fontFamily: 'VT323, monospace', fontSize: '84px', fill: '#F9F9F9'

@@ -96,7 +96,9 @@ class EscenaFinal extends EscenaBase {
             this.boss.setTint(0xFF0000);
             this.loseSound.play();
             this.boss.bossLife -= 1;
-            console.log(this.boss.bossLife)
+
+            this.score += 30;
+            this.scoreText.setText(`Puntos: ${this.score}`);
 
             this.time.delayedCall(1000, () => {
                 this.bossSoundPlayed = false;
@@ -123,12 +125,14 @@ class EscenaFinal extends EscenaBase {
             this.balasBoss.children.iterate(bala => {
                 if (bala) {
                     bala.destroy();
-                }
+                };
             });
 
             setTimeout(() => {
                 this.balasBoss.clear(true, true);
                 this.bossSoundPlayed = false;
+                this.score += 100;
+                this.scoreText.setText(`Puntos: ${this.score}`);
                 this.scene.start('Gana', { score: this.score });
             }, 1500);
         };
