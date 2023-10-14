@@ -7,19 +7,17 @@ class Enemigo extends Phaser.Physics.Arcade.Sprite {
         scene.physics.world.enable(this);
 
         scene.anims.create({
-            key: 'explotion',
-            frames: scene.anims.generateFrameNumbers('enemigoExplosion', { start: 0, end: 4 }),
-            frameRate: 8,
-            onStart: function (anims, anim, gameObject) {
-                const explosionSound = scene.sound.add('explosionSound');
-                explosionSound.play();
-            },
-        });
-
-        scene.anims.create({
             key: 'enemy_idle',
             frames: [{ key: 'enemigo', frame: 0 }],
             frameRate: 4,
+        });
+
+        scene.anims.create({
+            key: 'explotion',
+            frames: scene.anims.generateFrameNumbers('enemigoExplosion', { start: 0, end: 5 }),
+            frameRate: 8,
+            repeat: -1,
+            yoyo: true
         });
 
         this.explosionPlaying = false;
@@ -27,9 +25,18 @@ class Enemigo extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         this.x += -6;
-        if (this.x <= 0) {
+        if (this.x <= -10) {
             this.destroy();
         };
+
+        if (this.hasBeenHit) {
+            this.play('explotion', true);
+            this.x -= -10;
+
+            setTimeout(() => {
+                this.destroy();
+            }, 500);
+        }
     };
 };
 

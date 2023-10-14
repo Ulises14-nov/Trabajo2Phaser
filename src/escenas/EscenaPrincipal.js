@@ -6,6 +6,10 @@ class Escena extends EscenaBase {
         super("Escena");
     };
 
+    init(data) {
+        this.score = data.score;
+    };
+
     create() {
         //Imagenes
         this.add.image(600, 300, 'fondo');
@@ -18,8 +22,8 @@ class Escena extends EscenaBase {
         this.createPlayer();
         this.createEnemies();
 
-        this.physics.add.overlap(this.balas, this.enemigos, this.bulletCollision, null, this);
-        this.physics.add.collider(this.nave, this.enemigos, this.enemyCollision, null, this);
+        this.physics.add.collider(this.balas, this.enemigos, this.bulletCollision, null, this);
+        this.physics.add.collider(this.nave, this.enemigos, this.handlePlayerDamage, null, this);
 
         this.lifeText = this.add.text(16, 16, 'Vidas: 3', {
             fontFamily: 'VT323, monospace', fontSize: '52px', fill: '#F9F9F9'
@@ -35,11 +39,17 @@ class Escena extends EscenaBase {
         this.enemigos.children.iterate(enemigo => {
             if (enemigo && enemigo.update) {
                 enemigo.update();
-            }
+            };
+        });
+
+        this.balas.children.iterate(bala => {
+            if (bala && bala.update) {
+                bala.update();
+            };
         });
 
         if (this.score >= 200) {
-            this.scene.start('EscenaFinal', { score: this.score })
+            this.scene.start('EscenaFinal', { score: this.score });
         };
     };
 };

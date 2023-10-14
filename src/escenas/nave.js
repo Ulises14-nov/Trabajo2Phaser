@@ -1,8 +1,12 @@
+import Bala from "./Bala.js";
+
 class Nave extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene) {
+    constructor(scene, balas) {
         super(scene, 100, 300, 'nave');
         scene.add.existing(this);
         scene.physics.add.existing(this);
+
+        this.balas = balas;
 
         this.setCollideWorldBounds(true);
 
@@ -64,7 +68,7 @@ class Nave extends Phaser.Physics.Arcade.Sprite {
             };
 
             if (this.cursors.space.isDown) {
-                this.scene.shoot();
+                this.scene.shoot(this, 30, 15, this.balas);
             };
         };
     };
