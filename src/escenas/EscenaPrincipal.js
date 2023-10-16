@@ -8,6 +8,7 @@ class Escena extends EscenaBase {
 
     init(data) {
         this.score = data.score;
+        this.lifes = data.lifes;
     };
 
     create() {
@@ -49,7 +50,7 @@ class Escena extends EscenaBase {
         });
 
         if (this.score >= 200) {
-            this.scene.start('EscenaFinal', { score: this.score });
+            this.scene.start('EscenaFinal', { score: this.score, lifes: this.lifes }, { reset: true });
         };
     };
 };
