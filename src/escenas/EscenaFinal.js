@@ -8,16 +8,17 @@ class EscenaFinal extends EscenaBase {
 
     init(data) {
         this.score = data.score;
+        this.lifes = data.lifes;
     };
 
     create() {
         this.add.image(550, 300, 'bossBG');
-        this.lifes = 3;
+
         this.balasBoss = this.physics.add.group();
         this.balas = this.physics.add.group();
+
         this.createPlayer();
         this.createBoss();
-
 
         this.physics.add.collider(this.balas, this.boss, this.reduceLife, null, this);
         this.physics.add.collider(this.balasBoss, this.nave, this.handlePlayerDamage, null, this);
